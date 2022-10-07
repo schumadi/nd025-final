@@ -100,6 +100,7 @@ To predict the four seasons, a multiclass classifier is needed. [LightGBM](https
 A speciality in this project is that we have to deal with timeseries data. The typical split of data into a training-, validation- and testset by Sklearn's *train_test_split()* is not appropriate here. Future data would be used to train the classifier. Therefore a chronological split has been made.
 * Data from 1940 - 1970 is the "past" data.
 * Data from 2000 - today is the "present" data.
+
 The past data has been used to train and test the classifier. The first 80 percent have been used for training and validation. The last 20 percent have been used as the testset.  
 The present data has been use to see if the quality of classification is different on these data.
 
@@ -129,7 +130,7 @@ It can be clearly seen that especially the prediction of "winter" is much better
 
 ![Confusion Matrix](./confusion.png)
 
-While 87 percent of the true labels have been predicted correctly for past data, that dropped to 74 percent for current data. A first hint that there could be a change. To dig deeper, the feature importance will help us to identify the features the have the most influence on the classification results.
+While 87 percent of the true labels have been predicted correctly for past data, that dropped to 74 percent for current data. A first hint that there could be a change. To dig deeper, the feature importance will help us to identify the features that have the most influence on the classification results.
 
 ![Feature Importance](./feature-importance.png)
 
@@ -143,33 +144,35 @@ The significance of the difference of the means of two samples can be tested by 
 
 The results of the test for TMK and TXK are
 >Ttest_indResult(statistic=-22.844295284131178, pvalue=2.450207719275157e-114)
+>
 >Ttest_indResult(statistic=-22.330531399357866, pvalue=2.2905374345706266e-109)
 
-With both p-values well below 0.05, we can reject both $H_{0-TMK}$ and $H_{0-TXK}$ and accept the alternative hypotheses
+With both p-values well below 0.05, we can reject both $H_{0-TMK}$ and $H_{0-TXK}$ and accept the alternative hypotheses.
 * $H_{a-TMK}$: The mean of the winter TMK distribution in the interval 1940 - 1970 is different from the on in the interval 2000 - today. 
 * $H_{a-TXK}$: The mean of the winter TMX distribution in the interval 1940 - 1970 is different from the on in the interval 2000 - today.
 
 
 Is there just the difference between the means or is there even a trend in the data. [Kendall’s tau](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.kendalltau.html?highlight=kendall) can be used to answer that. To test $H_0$: *There is no trend in the "It was at least that cold in December" values*, data has to be aggregated approprietly: 
 
->timeseries = (
->                df[['MESS_DATUM', 'TNK', 'MONTH']]
->                .query('MONTH == 12') # Select December values only
->                .groupby(by=df.MESS_DATUM.dt.year).agg({'TNK': np.max}) # Look at the maximum of all the minimal temperatures (TNK) "It was at least that cold in December >of the year ..." 
->                .reset_index()
->                .dropna()
->             )   
+```
+timeseries = (
+                df[['MESS_DATUM', 'TNK', 'MONTH']]
+                .query('MONTH == 12') # Select December values only
+                .groupby(by=df.MESS_DATUM.dt.year).agg({'TNK': np.max}) # Look at the maximum of all the minimal temperatures (TNK) "It was at least that cold in December >of the year ..." 
+                .reset_index()
+                .dropna()
+             )   
+```
 
 The result of the test is a correlation of 0.285 and a p-values of 3.76e-07. Again, the p-value is below 0.05. Also this hypothesis can be rejected and $H_a$: *There is some trend in the "It was at least that cold in December" values* can be accepted.
 ## Conclusion
 ### Reflection
 We started with the question whether there is a change of seasons or not. DWD data, a classifier and some statistics helped us to show that this is true, at least for winters in the Berlin area. That is not the only thing that can be learned from this project.  
-It is also important to note that the quality of a classifier can change, if the characteristic of the data changes. Furthermore timeseries data needs special attention to avoid errors by using future data.
+It is also important to note that the quality of a classifier can change, if the characteristic of the data changes. Furthermore timeseries data need special attention to avoid errors by using future data.
 ### Improvement
 There are a few things that could be done as an improvement.
-* Hyperparameter tuning of the LightGBM classifier could be continued or a different classifier coud be used.	
-* Data from the Berlin region has been used in the project. This coud be extended to other regions.
-* The focus has been put in the change of classificatio of oberservations in winter. The confusion matrix also show a change in summer. The classification of present data is better than that of past data. 
-### Github Repository
-	
+* Hyperparameter tuning of the LightGBM classifier could be continued or a different classifier could be used.	
+* Data from the Berlin region has been used in the project. This could be extended to other regions.
+* The focus has been put on the change of classifications of oberservations in winter. The confusion matrix also shows a change in summer. The classification of present data is better than that of past data. This could be explored.
+### Github Repository	
 https://github.com/schumadi/nd025-final is the repository for this project.
