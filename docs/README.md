@@ -50,9 +50,6 @@ In the table the SHK_TAG maximum value stand out. That's quite unusual for the B
 We see some quite obvious correlations:
 * There is a positive high correlation between min, max and average temparatures.
 * There is a negative correlation sunshine duration (SDK), mean cloud cover (NM) and mean relative humidity (UPM).
-
-Features and calculated statistics relevant to the problem have been reported and discussed related to the dataset, and a thorough description of the input space or input data has been made. Abnormalities or characteristics about the data or input that need to be addressed have been identified.
-
 ### Data Visualization
 A pairplot of the data might give a how good the chances are to train a classifier to predict seasons.
 
@@ -91,23 +88,40 @@ The DWD dataset contains these attributes.
 | TGK | daily minimum of air temperature at 5cm above ground | °C |
 | eor | End of data record |	
 
-*QN_3*, *QN_4* and *eor* are attributes that do not contain information relevant for this project. They can be dropped. *RSKF* is converted to categorical. Unfortunately, more than 70% of the values in *FX* and *FM* are missing. If so many values are missing, it's a good decision to drop these columns. That should not affect the results of the project as there are many attributes remaining that probably are more related to seasons.  
+*QN_3*, *QN_4* and *eor* are attributes that do not contain information relevant for this project. They can be dropped. *RSKF* is converted to categorical. Unfortunately, more than 70% of the values in *FX* and *FM* are missing. If so many values are missing, it's a good decision to drop these columns. That should not affect the results of the project as there are many attributes remaining that probably are more related to seasons. There are still missing values, but the classifier that has been used for the machine learning part can cope with this. Therefore there is no need to impute values or drop those rows.  
+(Please see this jupyter [notebook](./../data_wrangling.ipynb) for details.)
 
-All preprocessing steps have been clearly documented. Abnormalities or characteristics about the data or input that needed to be addressed have been corrected. If no data preprocessing is necessary, it has been clearly justified.
 
 ### Implementation
-	
-
-The process for which metrics, algorithms, and techniques were implemented with the given datasets or input data has been thoroughly documented. Complications that occurred during the coding process are discussed.
-
-### Refinement
+Data split 
 	
 
 The process of improving upon the algorithms and techniques used is clearly documented. Both the initial and final solutions are reported, along with intermediate solutions, if necessary.
 
 ## Results
 ### Model Evaluation and Validation
-	
+
+Data split 
+
+![Parameter Tuning](./optimization.png)
+https://optuna.readthedocs.io/en/stable/reference/generated/optuna.integration.lightgbm.train.html
+
+* "lambda_l1": 4.37818456429782
+* "lambda_l2": 1.5400901346778327e-05
+* "num_leaves": 31
+* "feature_fraction": 0.8
+* "bagging_fraction": 0.5766192558526406
+* "bagging_freq": 7
+* "min_child_samples": 20
+
+![ROC Testset](./roc-test.png)
+
+![ROC Current](./roc-current.png)
+
+![Confusion Matrix](./confusion.png)
+
+![Histogram](./means.png)
+
 
 If a model is used, the following should hold: The final model’s qualities — such as parameters — are evaluated in detail.
 
@@ -125,11 +139,15 @@ The final results are discussed in detail. Explain the exploration as to why som
 ## Conclusion
 ### Reflection
 	
+timeseries appropriate statistics
 
 Student adequately summarizes the end-to-end problem solution and discusses one or two particular aspects of the project they found interesting or difficult.
 
 ### Improvement
-	
+
+hyperparameter tuning	
+other regions
+summer change
 
 Discussion is made as to how at least one aspect of the implementation could be improved. Potential solutions resulting from these improvements are considered and compared/contrasted to the current solution.
 
