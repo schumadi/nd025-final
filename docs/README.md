@@ -46,20 +46,52 @@ In the table the SHK_TAG maximum value stand out. That's quite unusual for the B
 
 
 ![Correlation matrix](./correlation.png)
-We see some quite obvious correlations  
+
+We see some quite obvious correlations:
 * There is a positive high correlation between min, max and average temparatures.
 * There is a negative correlation sunshine duration (SDK), mean cloud cover (NM) and mean relative humidity (UPM).
 
 Features and calculated statistics relevant to the problem have been reported and discussed related to the dataset, and a thorough description of the input space or input data has been made. Abnormalities or characteristics about the data or input that need to be addressed have been identified.
 
 ### Data Visualization
-	
+A pairplot of the data might give a how good the chances are to train a classifier to predict seasons.
 
-Build data visualizations to further convey the information associated with your data exploration journey. Ensure that visualizations are appropriate for the data values you are plotting.
+![Pairplot](./pairplot.png)
 
+In many cases the seasons are separated quite clearly. Therefore a classifier should be able to predict a season. 
 ## Methodology
 ### Data Preprocessing
-	
+The DWD dataset contains these attributes.
+| Column | Meaning | Unit |
+| --- | --- | --- |
+| STATIONS_ID | station id ||
+| MESS_DATUM | date | yyyymmdd |
+| QN_3 | quality level of next columns | coding see paragraph "Quality information" |
+| FX | daily maximum of wind gust | m/s |
+| FM | daily mean of wind speed | m/s |
+| QN_4 | quality level of next columns | coding see paragraph "Quality information" |
+| RSK | daily precipitation height | mm |
+| RSKF | precipitation form ||
+||no precipitation (conventional or automatic measurement), relates to WMO code 10 | 0 |
+|| only rain (before 1979) | 1 |
+||unknown form of recorded precipitation | 4 |
+|| only rain; only liquid precipitation at automatic stations, relates to WMO code 11 | 6 |
+|| only snow; only solid precipitation at automatic stations, relates to WMO code 12 | 7 |
+|| rain and snow (and/or "Schneeregen"); liquid and solid precipitation at automatic stations, relates to WMO code 13 | 8 |
+|| error or missing value or no automatic determination of precipitation form, relates to WMO code 15 | 9 |
+| SDK | daily sunshine duration | h |
+| SHK_TAG | daily snow depth | cm |
+| NM | daily mean of cloud cover | 1/8 |
+| VPM | daily mean of vapor pressure | hPa |
+| PM | daily mean of pressure | hPa |
+| TMK | daily mean of temperature | °C |
+| UPM | daily mean of relative humidity | % |
+| TXK | daily maximum of temperature at 2m height | °C |
+| TNK | daily minimum of temperature at 2m height | °C |
+| TGK | daily minimum of air temperature at 5cm above ground | °C |
+| eor | End of data record |	
+
+*QN_3*, *QN_4* and *eor* are attributes that do not contain information relevant for this project. They can be dropped. *RSKF* is converted to categorical. Unfortunately, more than 70% of the values in *FX* and *FM* are missing. If so many values are missing, it's a good decision to drop these columns. That should not affect the results of the project as there are many attributes remaining that probably are more related to seasons.  
 
 All preprocessing steps have been clearly documented. Abnormalities or characteristics about the data or input that needed to be addressed have been corrected. If no data preprocessing is necessary, it has been clearly justified.
 
