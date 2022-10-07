@@ -1,28 +1,54 @@
-# Udacity Data Scientist Capstone
-
+# Udacity Data Scientist Capstone Project
 ## Project Definition
 ### Project Overview
-	
+When talking to older people, they often say that in their youth seasons were different. A summer was a "real" summer, a winter was a "real" winter.  
+In this project I'd like to investigate:
+* Is a machine learning algorithm capable of predicting the season if it is given the weather condition of a day?
+* Can it be shown that seasons in the past were different?
 
-Student provides a high-level overview of the project. Background information such as the problem domain, the project origin, and related data sets or input data is provided.
+[DWD](https://www.dwd.de/EN/Home/home_node.html)'s dataset "DWD Climate Data Center (CDC): Historical daily station observations (temperature, pressure, precipitation, sunshine duration, etc.) for Germany, version v21.3, 2021." will be used to answer those questions. Observations from the Berlin (Germany) area will be used. 
 
 ### Problem Statement
-	
+#### Machine Learning
+In the machine learning part, the task is to find a classifier that is able to predict seasons.
+* How good is a classifier at predicting the season (spring, summer, autumn, winter) an observation has been made in?
+* Does the quality of the predictions differ when comparing the classifications of observations in the past to current ones?
 
-The problem which needs to be solved is clearly defined. A strategy for solving the problem, including discussion of the expected solution, has been made.
+#### Statistics
+In the statistics part, these hypotheses are to be tested. TMK is the daily mean of temperature. TXK is the daily maximum of temperature at 2m height.
+* $H_{0-TMK}$: The mean of the winter TMK distribution in the interval 1940 - 1970 is the same as in the interval 2000 - today.  
+* $H_{a-TMK}$: The mean of the winter TMK distribution in the interval 1940 - 1970 is different from the on in the interval 2000 - today.
+
+
+* $H_{0-TXK}$: The mean of the winter TMX distribution in the interval 1940 - 1970 is the same as in the interval 2000 - today.  
+* $H_{a-TXK}$: The mean of the winter TMX distribution in the interval 1940 - 1970 is different from the on in the interval 2000 - today.
+
+
+In addition to comparing the means of the two samples, it will be tested whether there is a trend in the observations of the coldest days in winter. 
+* $H_0$: There is no trend in the "It was at least that cold in December" values.  
+* $H_a$: There is some trend in the "It was at least that cold in December" values.
 
 ### Metrics
-	
 
-Metrics used to measure the performance of a model or result are clearly defined. Metrics are justified based on the characteristics of the problem.
+https://neptune.ai/blog/f1-score-accuracy-roc-auc-pr-auc
+
 
 For example, explain why you want to use the accuracy score and/or F-score to measure your model performance in a classification problem,
 
 ## Analysis
-Criteria 	Meets Specifications
-
 ### Data Exploration
-	
+![Basis statistics](./describe-dataset.png)
+
+In the table the SHK_TAG maximum value stand out. That's quite unusual for the Berlin area. 
+`clean.query('SHK_TAG == SHK_TAG.max()')` will give us the date this unusual snow depth was measured on. It is 1979-02-18. The winter 1978/1979 was a really [harsh winter in Germany](https://www.vintag.es/2021/01/1978-germany-blizzard.html).
+
+>This blizzard was just the beginning of the winter that crippled everything in Germany, for another round of snow and ice of similar proportions fell later on February 18/19, 1979.
+
+
+![Correlation matrix](./correlation.png)
+We see some quite obvious correlations  
+* There is a positive high correlation between min, max and average temparatures.
+* There is a negative correlation sunshine duration (SDK), mean cloud cover (NM) and mean relative humidity (UPM).
 
 Features and calculated statistics relevant to the problem have been reported and discussed related to the dataset, and a thorough description of the input space or input data has been made. Abnormalities or characteristics about the data or input that need to be addressed have been identified.
 
@@ -32,26 +58,22 @@ Features and calculated statistics relevant to the problem have been reported an
 Build data visualizations to further convey the information associated with your data exploration journey. Ensure that visualizations are appropriate for the data values you are plotting.
 
 ## Methodology
-Criteria 	Meets Specifications
-
-## Data Preprocessing
+### Data Preprocessing
 	
 
 All preprocessing steps have been clearly documented. Abnormalities or characteristics about the data or input that needed to be addressed have been corrected. If no data preprocessing is necessary, it has been clearly justified.
 
-## Implementation
+### Implementation
 	
 
 The process for which metrics, algorithms, and techniques were implemented with the given datasets or input data has been thoroughly documented. Complications that occurred during the coding process are discussed.
 
-## Refinement
+### Refinement
 	
 
 The process of improving upon the algorithms and techniques used is clearly documented. Both the initial and final solutions are reported, along with intermediate solutions, if necessary.
 
 ## Results
-Criteria 	Meets Specifications
-
 ### Model Evaluation and Validation
 	
 
@@ -69,8 +91,6 @@ Alternatively, a student may choose to answer questions with data visualizations
 The final results are discussed in detail. Explain the exploration as to why some techniques worked better than others, or how improvements were made are documented.
 
 ## Conclusion
-Criteria 	Meets Specifications
-
 ### Reflection
 	
 
@@ -81,24 +101,7 @@ Student adequately summarizes the end-to-end problem solution and discusses one 
 
 Discussion is made as to how at least one aspect of the implementation could be improved. Potential solutions resulting from these improvements are considered and compared/contrasted to the current solution.
 
-## Deliverables
-Criteria 	Meets Specifications
-
-### Write-up or Application
-	
-
-If the student chooses to provide a blog post the following must hold: Project report follows a well-organized structure and would be readily understood by a technical audience. Each section is written in a clear, concise and specific manner. Few grammatical and spelling mistakes are present. All resources used to complete the project are cited and referenced.
-
-If the student chooses to submit a web-application, the following holds: There is a web application that utilizes data to inform how the web application works. The application does not need to be hosted, but directions for how to run the application on a local machine should be documented.
 
 ### Github Repository
 	
-
-Student must have a Github repository of their project. The repository must have a README.md file that communicates the libraries used, the motivation for the project, the files in the repository with a small description of each, a summary of the results of the analysis, and necessary acknowledgements. If the student submits a web app rather than a blog post, then the Project Definition, Analysis, and Conclusion should be included in the README file, or in their Jupyter Notebook. Students should not use another student's code to complete the project, but they may use other references on the web including StackOverflow and Kaggle to complete the project.
-
-### Best Practices
-	
-
-Code is formatted neatly with comments and uses DRY principles. A README file is provided that provides. PEP8 is used as a guideline for best coding practices.
-
-Best practices from software engineering and communication lessons are used to create a phenomenal end product that students can be proud to showcase!
+https://github.com/schumadi/nd025-final is the repository for this project.
