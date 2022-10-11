@@ -31,11 +31,10 @@ In addition to comparing the means of the two samples, it will be tested whether
 * $H_a$: There is some trend in the "It was at least that cold in December" values.
 
 ### Metrics
+In his blog post [Which evaluation metric shoud you choose](https://neptune.ai/blog/f1-score-accuracy-roc-auc-pr-auc) Jakub Czakon presents a nice overview of popular metrics like F1-Score, PR AUC, Accuracy and ROC AUC. As we want to solve a multiclass classification problem, we need a metric that is appropriate for that purpose and available in the implementation of the classifier. LightGBM, which is the classifier that will be used, has a metric *auc_mu* for multiclass classification problems. 
+$AUC_μ$: [A Performance Metric for Multi-Class Machine Learning Models](https://proceedings.mlr.press/v97/kleiman19a/kleiman19a.pdf)
+>The area under the receiver operating characteristic curve (AUC) is arguably the most common metric in machine learning for assessing the quality of a >two-class classification model. As the number and complexity of machine learning applications grows, so too does the need for measures that can gracefully >extend to classification models trained for more than two classes. Prior work in this area has proven computationally intractable and/or inconsistent with >known properties of AUC, and thus there is still a need for an improved multi-class efficacy metric. We provide in this work a multi-class extension of AUC >that we call AUCμ that is derived from first principles of the binary class AUC. AUCμ has similar computational complexity to AUC and maintains the >properties of AUC critical to its interpretation and use. 
 
-https://neptune.ai/blog/f1-score-accuracy-roc-auc-pr-auc
-
-
-For example, explain why you want to use the accuracy score and/or F-score to measure your model performance in a classification problem,
 
 ## Analysis
 ### Data Exploration
@@ -126,7 +125,7 @@ The best model found by Optuna reaches an F1-Score of 0.68 on the testdata and a
 ![ROC Testset](./roc-test.png)
 ![ROC Current](./roc-current.png)
 
-It can be clearly seen that especially the prediction of "winter" is much better in the past. The confusion matrices show more details.  
+It can be clearly seen that especially the prediction of "winter" is much better for the past data. The confusion matrices show more details.  
 
 ![Confusion Matrix](./confusion.png)
 
