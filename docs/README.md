@@ -38,6 +38,7 @@ $AUC_μ$: [A Performance Metric for Multi-Class Machine Learning Models](https:/
 
 ## Analysis
 ### Data Exploration
+#### Descriptive Statistics
 ![Basis statistics](./describe-dataset.png)
 
 The table provides the basic statistics for the numeric features. We see that the mean temperature in the Berlin area is 9.4°C. The lowest temperature measured has been -33.4°C. The SHK_TAG maximum value stands out. 63 cm of snow are quite unusual for the Berlin area. 
@@ -45,8 +46,10 @@ The table provides the basic statistics for the numeric features. We see that th
 
 >This blizzard was just the beginning of the winter that crippled everything in Germany, for another round of snow and ice of similar proportions fell later on February 18/19, 1979.
 
-
+#### Correlation Matrix
 The correlation matrix shows how features are related.
+
+
 ![Correlation matrix](./correlation.png)
 
 We see some quite obvious correlations:
