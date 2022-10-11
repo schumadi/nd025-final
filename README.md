@@ -38,7 +38,7 @@ DWD Climate Data Center (CDC): Historical daily station observations (temperatur
 * /data/cleaned_dataset.parquet - Created by the data_wrangling jupyter notebook 
 
 ## Summary of the results of the analysis
-My results are published at https://schumadi.github.io/nd025-final/
+The summary of the results can be seen here https://github.com/schumadi/nd025-final/tree/master/docs#readme
 
 ## Acknowledgments
 * [Udacity](https://www.udacity.com/) offers this excellent nanodegree program.

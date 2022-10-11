@@ -19,11 +19,11 @@ In the machine learning part, the task is to find a classifier that is able to p
 #### Statistics
 In the statistics part, these hypotheses are to be tested. TMK is the daily mean of temperature. TXK is the daily maximum of temperature at 2m height.
 * TMK
-   * $H_{0-TMK}$: The mean of the winter TMK distribution in the interval 1940 - 1970 is the same as in the interval 2000 - today.  
-   * $H_{a-TMK}$: The mean of the winter TMK distribution in the interval 1940 - 1970 is different from the one in the interval 2000 - today.
+   * $H_{0-TMK}$: The mean of the winter TMK distribution in the interval 1940 - 1970 is the same as in the interval 2000 - 2021.  
+   * $H_{a-TMK}$: The mean of the winter TMK distribution in the interval 1940 - 1970 is different from the one in the interval 2000 - 2021.
 * TXK
-   * $H_{0-TXK}$: The mean of the winter TMX distribution in the interval 1940 - 1970 is the same as in the interval 2000 - today.  
-   * $H_{a-TXK}$: The mean of the winter TMX distribution in the interval 1940 - 1970 is different from the one in the interval 2000 - today.
+   * $H_{0-TXK}$: The mean of the winter TMX distribution in the interval 1940 - 1970 is the same as in the interval 2000 - 2021.  
+   * $H_{a-TXK}$: The mean of the winter TMX distribution in the interval 1940 - 1970 is different from the one in the interval 2000 - 2021.
 
 
 In addition to comparing the means of the two samples (past & present), it will be tested whether there is a trend in the observations of the coldest days in winter. 
@@ -102,7 +102,7 @@ This [notebook](./../machine_learning.ipynb) contains the machine learning and s
 To predict the four seasons, a multiclass classifier is needed. [LightGBM](https://lightgbm.readthedocs.io/en/latest/index.html) worked well for this type of problem in other projects. Therefore it has been chosen again.  
 A speciality in this project is that we have to deal with timeseries data. The typical split of data into a training-, validation- and testset by Sklearn's *train_test_split()* is not appropriate here. Future data would be used to train the classifier. Therefore a chronological split has been made.
 * Data from 1940 - 1970 is the "past" data.
-* Data from 2000 - today is the "present" data.
+* Data from 2000 - 2021 is the "present" data.
 
 The past data has been used to train and test the classifier. The first 80 percent have been used for training and validation. The last 20 percent have been used as the testset.  
 The present data has been use to see if the quality of classification is different on these data.
@@ -157,8 +157,8 @@ The results of the test for TMK and TXK are
 >Ttest_indResult(statistic=-22.330531399357866, pvalue=2.2905374345706266e-109)
 
 With both p-values well below 0.05, we can reject both $H_{0-TMK}$ and $H_{0-TXK}$ and accept the alternative hypotheses.
-* $H_{a-TMK}$: The mean of the winter TMK distribution of the interval 1940 - 1970 is different from the one of the interval 2000 - today. 
-* $H_{a-TXK}$: The mean of the winter TMX distribution of the interval 1940 - 1970 is different from the one of the interval 2000 - today.
+* $H_{a-TMK}$: The mean of the winter TMK distribution of the interval 1940 - 1970 is different from the one of the interval 2000 - 2021. 
+* $H_{a-TXK}$: The mean of the winter TMX distribution of the interval 1940 - 1970 is different from the one of the interval 2000 - 2021.
 
 
 Is there just the difference between the means of the two samples or is there even a trend in the data? [Kendall’s tau](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.kendalltau.html?highlight=kendall) can be used to answer that.  

@@ -62,7 +62,7 @@ def get_distance_between_points(latitude1, longitude1, latitude2, longitude2, un
 
     if unit == 'miles':
         return round(distance, 2)
-    if unit == 'kilometers':
+    if unit == 'km':
         return round(distance * 1.609344, 2)
 
 
@@ -154,7 +154,7 @@ def get_dwd_data (station, radius, unit):
     # The files of stations within the selected range are to be downloaded
     files['Download'] = files['id'].isin(ids['Stations_id_y'])
     files['localname'] = files.filename.str[97:]
-    to_be_downloaded = files.loc[bool(files['Download'])]
+    to_be_downloaded = files.loc[files['Download'] == True]
 
     # Download the files
     for row in to_be_downloaded.itertuples(index=False):
